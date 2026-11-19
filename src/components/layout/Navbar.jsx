@@ -359,7 +359,7 @@ export default function Navbar() {
       {mobileMenuOpen && (
         <>
           <div className="fixed inset-0 bg-black/50 z-40 md:hidden" onClick={() => setMobileOpen(false)} />
-          <div className={`fixed top-0 left-0 h-screen w-80 max-w-[90vw] bg-white shadow-2xl z-50 md:hidden overflow-y-auto transform transition-transform duration-300 ease-in-out ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"}`}>
+         <div className={`fixed top-0 left-0 h-screen w-1/2 max-w-[50vw] min-w-[160px] bg-white shadow-2xl z-50 md:hidden overflow-y-auto transform transition-transform duration-300 ease-in-out ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"}`}>
             <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-white">
               <h2 className="text-xl font-bold text-blue-600">iShop</h2>
               <button onClick={() => setMobileOpen(false)} className="text-2xl p-2 hover:bg-gray-200 rounded-lg">✕</button>
