@@ -1,9 +1,9 @@
+
 import { NextResponse } from "next/server";
-import { verifyToken } from "@/lib/jwt";
+import { jwtVerify } from "jose";
 
-export function middleware(request) {
+export async function middleware(request) {
   const token = request.cookies.get("token")?.value;
-
   const { pathname } = request.nextUrl;
 
   // Public routes
@@ -22,13 +22,18 @@ export function middleware(request) {
     pathname.startsWith("/seller") ||
     pathname.startsWith("/admin")
   ) {
-    if (!token) {
+    if (!token || !process.env.JWT_SECRET) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
 
-    const user = verifyToken(token);
+    let user;
 
-    if (!user) {
+    try {
+      const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+      const { payload } = await jwtVerify(token, secret);
+
+      user = payload;
+    } catch {
       return NextResponse.redirect(new URL("/login", request.url));
     }
 
@@ -49,9 +54,5 @@ export function middleware(request) {
 }
 
 export const config = {
-  matcher: [
-    "/buyer/:path*",
-    "/seller/:path*",
-    "/admin/:path*",
-  ],
+  matcher: ["/buyer/:path*", "/seller/:path*", "/admin/:path*"],
 };
