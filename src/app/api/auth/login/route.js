@@ -131,7 +131,7 @@ export async function POST(request) {
 
     const token = generateToken(user);
 
-    console.log("TOKEN:", token);
+    
 
     const cookieStore = await cookies();
 
